@@ -953,6 +953,7 @@ public class BaMinigamePlugin extends Plugin
 			{
 				runnerTickTimer.incrementCount();
 			}
+			quickstartAssist.tick();
 		}
 		else if (loadingPlayerRoles)
 		{
@@ -1350,6 +1351,7 @@ public class BaMinigamePlugin extends Plugin
 		runnerTickTimer = new RunnerTickTimer();
 		runnerTickTimer.setDisplaying(displayTickTimer);
 		correctedCallCount = 0;
+		quickstartAssist.startWave();
 
 		if (role != null)
 		{
@@ -1360,8 +1362,6 @@ public class BaMinigamePlugin extends Plugin
 			}
 			clientThread.invokeLater(() -> setWaveWidgets(wave));
 		}
-
-		quickstartAssist.startWave();
 	}
 
 	private void setWaveWidgets(Wave wave)
@@ -1642,8 +1642,8 @@ public class BaMinigamePlugin extends Plugin
 		groundBait.clear();
 		groundLogsHammer.clear();
 		disableRunnerTickTimer(true);
-		quickstartAssist.endWave();
 		removeDeathTimesInfoBoxes();
+		quickstartAssist.endWave();
 		lastListen = null;
 		lastListenItemId = 0;
 		clientThread.invokeLater(this::restoreAttackStyleText);

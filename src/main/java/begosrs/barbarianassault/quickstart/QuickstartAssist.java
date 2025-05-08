@@ -24,7 +24,9 @@ public class QuickstartAssist
 	private final ChatMessageManager chatManager;
 	private final BaMinigameConfig config;
 
-	private PremoveInfoBox premoveInfoBox;
+	private final PremoveInfoBox premoveInfoBox;
+
+	private boolean checkPremove;
 
 	@Inject
 	public QuickstartAssist(
@@ -36,32 +38,60 @@ public class QuickstartAssist
 		this.chatManager = chatManager;
 		this.infoBoxManager = infoBoxManager;
 		this.config = config;
+		this.premoveInfoBox = new PremoveInfoBox(plugin);
+	}
+
+	public void tick()
+	{
+		if (config.premoveIndicator() == PremoveIndicatorMode.DISABLED)
+		{
+			checkPremove = false;
+			return;
+		}
+
+		if (checkPremove)
+		{
+			updatePremove();
+			checkPremove = false;
+		}
 	}
 
 	public void startWave()
+	{
+		checkPremove = true;
+	}
+
+	public void endWave()
+	{
+		infoBoxManager.removeInfoBox(premoveInfoBox);
+		checkPremove = false;
+	}
+
+	private void updatePremove()
 	{
 		Player player = client.getLocalPlayer();
 		if (player == null)
 		{
 			return;
 		}
-		WorldPoint wp = player.getWorldLocation();
 
+		final WorldPoint wp = player.getWorldLocation();
 		final PremoveIndicatorMode indicatorMode = config.premoveIndicator();
+		final String yStr = formatInt(wp.getY());
+		final boolean goodPremove = wp.getY() < PREMOVE_Y_THRESHOLD;
+		final String premoveStr = goodPremove ? "Good premove" : "Bad premove";
+
 		if (indicatorMode == PremoveIndicatorMode.INFO_BOX || indicatorMode == PremoveIndicatorMode.INFO_BOX_AND_CHAT)
 		{
-			if (premoveInfoBox != null)
-			{
-				infoBoxManager.removeInfoBox(premoveInfoBox);
-			}
-			premoveInfoBox = new PremoveInfoBox(plugin, wp);
+			infoBoxManager.removeInfoBox(premoveInfoBox);
+			premoveInfoBox.setText(yStr);
+			premoveInfoBox.setGoodPremove(goodPremove);
+			premoveInfoBox.setTooltip(premoveStr);
 			infoBoxManager.addInfoBox(premoveInfoBox);
 		}
 		if (indicatorMode == PremoveIndicatorMode.CHAT || indicatorMode == PremoveIndicatorMode.INFO_BOX_AND_CHAT)
 		{
-			boolean goodPremove = wp.getY() < PREMOVE_Y_THRESHOLD;
-			String message = String.format("Premove condition is %s (%d).",
-					goodPremove ? "good" : "bad", wp.getY());
+			String message = String.format("%s (%s)", premoveStr, yStr);
 			if (config.enableGameChatColors())
 			{
 				message = ColorUtil.wrapWithColorTag(message, goodPremove ? Color.GREEN : Color.RED);
@@ -73,12 +103,8 @@ public class QuickstartAssist
 		}
 	}
 
-	public void endWave()
+	private static String formatInt(int a)
 	{
-		if (premoveInfoBox != null)
-		{
-			infoBoxManager.removeInfoBox(premoveInfoBox);
-			premoveInfoBox = null;
-		}
+		return String.format("%d.%dk", a / 1000, (a % 1000) / 100);
 	}
 }
