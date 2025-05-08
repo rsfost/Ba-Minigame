@@ -50,6 +50,7 @@ import begosrs.barbarianassault.points.RewardsBreakdownMode;
 import begosrs.barbarianassault.points.RolePointsInfoBox;
 import begosrs.barbarianassault.points.RolePointsOverlay;
 import begosrs.barbarianassault.points.RolePointsTrackingMode;
+import begosrs.barbarianassault.quickstart.QuickstartAssist;
 import begosrs.barbarianassault.teamhealthbar.TeamHealthBarOverlay;
 import begosrs.barbarianassault.ticktimer.RunnerTickTimer;
 import begosrs.barbarianassault.ticktimer.RunnerTickTimerOverlay;
@@ -226,6 +227,8 @@ public class BaMinigamePlugin extends Plugin
 	private MenuEntrySwapper menuEntrySwapper;
 	@Inject
 	private AttackStyleUtil attackStyleUtil;
+	@Inject
+	private QuickstartAssist quickstartAssist;
 	@Inject
 	private WaveInfoOverlay waveInfoOverlay;
 	@Inject
@@ -1357,6 +1360,8 @@ public class BaMinigamePlugin extends Plugin
 			}
 			clientThread.invokeLater(() -> setWaveWidgets(wave));
 		}
+
+		quickstartAssist.startWave();
 	}
 
 	private void setWaveWidgets(Wave wave)
@@ -1637,6 +1642,7 @@ public class BaMinigamePlugin extends Plugin
 		groundBait.clear();
 		groundLogsHammer.clear();
 		disableRunnerTickTimer(true);
+		quickstartAssist.endWave();
 		removeDeathTimesInfoBoxes();
 		lastListen = null;
 		lastListenItemId = 0;
