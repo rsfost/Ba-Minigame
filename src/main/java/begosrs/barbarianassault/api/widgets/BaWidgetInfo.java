@@ -38,6 +38,12 @@ import net.runelite.api.widgets.WidgetID;
 @Getter
 public enum BaWidgetInfo
 {
+	BA_TEAM_PLAYER1_NAME(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER1_NAME),
+	BA_TEAM_PLAYER2_NAME(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER2_NAME),
+	BA_TEAM_PLAYER3_NAME(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER3_NAME),
+	BA_TEAM_PLAYER4_NAME(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER4_NAME),
+	BA_TEAM_PLAYER5_NAME(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER5_NAME),
+
 	BA_TEAM_PLAYER1_ROLE(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER1_ROLE),
 	BA_TEAM_PLAYER2_ROLE(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER2_ROLE),
 	BA_TEAM_PLAYER3_ROLE(InterfaceID.BA_TEAM, BaWidgetID.BarbarianAssault.Team.PLAYER3_ROLE),

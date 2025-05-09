@@ -106,6 +106,11 @@ public class BaWidgetID
 
 		static class Team
 		{
+			static final int PLAYER1_NAME = 8;
+			static final int PLAYER2_NAME = 9;
+			static final int PLAYER3_NAME = 10;
+			static final int PLAYER4_NAME = 11;
+			static final int PLAYER5_NAME = 12;
 			static final int PLAYER1_ROLE = 18;
 			static final int PLAYER2_ROLE = 19;
 			static final int PLAYER3_ROLE = 20;
