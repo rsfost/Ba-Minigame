@@ -328,6 +328,18 @@ public interface BaMinigameConfig extends Config
 	}
 
 	@ConfigItem(
+			keyName = "premoveIndicatorLeaderOnly",
+			name = "Premove indication: leader only",
+			description = "Only indicate premove condition when leading the team",
+			section = inGameSection,
+			position = 15
+	)
+	default boolean premoveIndicatorLeaderOnly()
+	{
+		return true;
+	}
+
+	@ConfigItem(
 		keyName = "highlightArrows",
 		name = "Highlight arrows",
 		description = "Highlights arrows called by your teammate",

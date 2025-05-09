@@ -45,6 +45,7 @@ public class QuickstartAssist
 	public static final int PREMOVE_Y_THRESHOLD = 5300;
 
 	private final Client client;
+	private final BaMinigamePlugin plugin;
 	private final InfoBoxManager infoBoxManager;
 	private final ChatMessageManager chatManager;
 	private final BaMinigameConfig config;
@@ -59,6 +60,7 @@ public class QuickstartAssist
 			ItemManager itemManager, InfoBoxManager infoBoxManager, BaMinigameConfig config)
 	{
 		this.client = client;
+		this.plugin = plugin;
 		this.chatManager = chatManager;
 		this.infoBoxManager = infoBoxManager;
 		this.config = config;
@@ -67,7 +69,8 @@ public class QuickstartAssist
 
 	public void tick()
 	{
-		if (config.premoveIndicator() == PremoveIndicatorMode.DISABLE)
+		if (config.premoveIndicator() == PremoveIndicatorMode.DISABLE ||
+				(config.premoveIndicatorLeaderOnly() && !plugin.isLeader()))
 		{
 			checkPremove = false;
 			return;

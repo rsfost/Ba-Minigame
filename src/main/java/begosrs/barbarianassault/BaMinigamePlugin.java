@@ -276,6 +276,8 @@ public class BaMinigamePlugin extends Plugin
 	private int correctedCallCount;
 	private boolean containsRoleHorn;
 	private boolean loadingPlayerRoles;
+	@Getter
+	private boolean isLeader;
 
 	@Provides
 	BaMinigameConfig provideConfig(ConfigManager configManager)
@@ -958,6 +960,10 @@ public class BaMinigamePlugin extends Plugin
 		}
 		else if (loadingPlayerRoles)
 		{
+			final Widget leader = client.getWidget(BaWidgetInfo.BA_TEAM_PLAYER1_NAME.getGroupId(), BaWidgetInfo.BA_TEAM_PLAYER1_NAME.getChildId());
+			final Player player = client.getLocalPlayer();
+			this.isLeader = leader != null && player != null && leader.getText().equals(player.getName());
+
 			for (int i = 0; i < TEAM_PLAYERS_ROLES_WIDGETS.length; i++)
 			{
 				final Widget playerRole = client.getWidget(TEAM_PLAYERS_ROLES_WIDGETS[i].getGroupId(), TEAM_PLAYERS_ROLES_WIDGETS[i].getChildId());
