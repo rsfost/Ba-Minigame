@@ -6,8 +6,10 @@ import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.Player;
 import net.runelite.api.coords.WorldPoint;
+import net.runelite.api.gameval.ItemID;
 import net.runelite.client.chat.ChatMessageManager;
 import net.runelite.client.chat.QueuedMessage;
+import net.runelite.client.game.ItemManager;
 import net.runelite.client.ui.overlay.infobox.InfoBoxManager;
 import net.runelite.client.util.ColorUtil;
 
@@ -19,7 +21,6 @@ public class QuickstartAssist
 	public static final int PREMOVE_Y_THRESHOLD = 5300;
 
 	private final Client client;
-	private final BaMinigamePlugin plugin;
 	private final InfoBoxManager infoBoxManager;
 	private final ChatMessageManager chatManager;
 	private final BaMinigameConfig config;
@@ -31,14 +32,13 @@ public class QuickstartAssist
 	@Inject
 	public QuickstartAssist(
 			Client client, BaMinigamePlugin plugin, ChatMessageManager chatManager,
-			InfoBoxManager infoBoxManager, BaMinigameConfig config)
+			ItemManager itemManager, InfoBoxManager infoBoxManager, BaMinigameConfig config)
 	{
 		this.client = client;
-		this.plugin = plugin;
 		this.chatManager = chatManager;
 		this.infoBoxManager = infoBoxManager;
 		this.config = config;
-		this.premoveInfoBox = new PremoveInfoBox(plugin);
+		this.premoveInfoBox = new PremoveInfoBox(itemManager.getImage(ItemID.TRAIL_WATCH), plugin);
 	}
 
 	public void tick()
