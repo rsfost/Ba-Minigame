@@ -83,7 +83,6 @@ public class QuickstartAssist
 
 		if (indicatorMode == PremoveIndicatorMode.INFO_BOX || indicatorMode == PremoveIndicatorMode.INFO_BOX_AND_CHAT)
 		{
-			infoBoxManager.removeInfoBox(premoveInfoBox);
 			premoveInfoBox.setText(yStr);
 			premoveInfoBox.setGoodPremove(goodPremove);
 			premoveInfoBox.setTooltip(premoveStr);

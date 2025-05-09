@@ -345,6 +345,7 @@ public class BaMinigamePlugin extends Plugin
 		disableRunnerTickTimer(true);
 		removeDeathTimesInfoBoxes();
 		removeRolePointsInfoBoxes();
+		quickstartAssist.endWave();
 		clientThread.invokeLater(this::restoreHealerTeammatesHealth);
 		clientThread.invokeLater(this::restoreAttackStyleText);
 		if (wave != null)
