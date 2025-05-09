@@ -43,7 +43,7 @@ public class QuickstartAssist
 
 	public void tick()
 	{
-		if (config.premoveIndicator() == PremoveIndicatorMode.DISABLED)
+		if (config.premoveIndicator() == PremoveIndicatorMode.DISABLE)
 		{
 			checkPremove = false;
 			return;

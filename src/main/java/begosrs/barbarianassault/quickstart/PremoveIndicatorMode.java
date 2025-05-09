@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public enum PremoveIndicatorMode
 {
-	DISABLED("Disabled"),
+	DISABLE("Disable"),
 	INFO_BOX("Info Box"),
 	CHAT("Chat"),
 	INFO_BOX_AND_CHAT("Info Box/Chat");

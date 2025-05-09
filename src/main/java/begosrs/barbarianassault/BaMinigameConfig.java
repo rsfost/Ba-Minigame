@@ -324,7 +324,7 @@ public interface BaMinigameConfig extends Config
 	)
 	default PremoveIndicatorMode premoveIndicator()
 	{
-		return PremoveIndicatorMode.DISABLED;
+		return PremoveIndicatorMode.DISABLE;
 	}
 
 	@ConfigItem(
