@@ -35,6 +35,7 @@ import begosrs.barbarianassault.points.PointsCounterMode;
 import begosrs.barbarianassault.points.PointsMode;
 import begosrs.barbarianassault.points.RewardsBreakdownMode;
 import begosrs.barbarianassault.points.RolePointsTrackingMode;
+import begosrs.barbarianassault.quickstart.PremoveIndicatorMode;
 import begosrs.barbarianassault.timer.DurationMode;
 import begosrs.barbarianassault.timer.TimeUnits;
 import java.awt.Color;
@@ -310,6 +311,30 @@ public interface BaMinigameConfig extends Config
 		position = 13
 	)
 	default boolean announceCallCorrection()
+	{
+		return true;
+	}
+
+	@ConfigItem(
+			keyName = "premoveIndicator",
+			name = "Premove indication",
+			description = "Indicate whether premove condition is good or bad",
+			section = inGameSection,
+			position = 14
+	)
+	default PremoveIndicatorMode premoveIndicator()
+	{
+		return PremoveIndicatorMode.DISABLE;
+	}
+
+	@ConfigItem(
+			keyName = "premoveIndicatorLeaderOnly",
+			name = "Premove indication: leader only",
+			description = "Only indicate premove condition when leading the team",
+			section = inGameSection,
+			position = 15
+	)
+	default boolean premoveIndicatorLeaderOnly()
 	{
 		return true;
 	}

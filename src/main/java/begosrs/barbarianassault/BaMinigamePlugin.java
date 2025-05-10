@@ -50,6 +50,7 @@ import begosrs.barbarianassault.points.RewardsBreakdownMode;
 import begosrs.barbarianassault.points.RolePointsInfoBox;
 import begosrs.barbarianassault.points.RolePointsOverlay;
 import begosrs.barbarianassault.points.RolePointsTrackingMode;
+import begosrs.barbarianassault.quickstart.QuickstartAssist;
 import begosrs.barbarianassault.teamhealthbar.TeamHealthBarOverlay;
 import begosrs.barbarianassault.ticktimer.RunnerTickTimer;
 import begosrs.barbarianassault.ticktimer.RunnerTickTimerOverlay;
@@ -227,6 +228,8 @@ public class BaMinigamePlugin extends Plugin
 	@Inject
 	private AttackStyleUtil attackStyleUtil;
 	@Inject
+	private QuickstartAssist quickstartAssist;
+	@Inject
 	private WaveInfoOverlay waveInfoOverlay;
 	@Inject
 	private InventoryOverlay inventoryOverlay;
@@ -273,6 +276,8 @@ public class BaMinigamePlugin extends Plugin
 	private int correctedCallCount;
 	private boolean containsRoleHorn;
 	private boolean loadingPlayerRoles;
+	@Getter
+	private boolean isLeader;
 
 	@Provides
 	BaMinigameConfig provideConfig(ConfigManager configManager)
@@ -342,6 +347,7 @@ public class BaMinigamePlugin extends Plugin
 		disableRunnerTickTimer(true);
 		removeDeathTimesInfoBoxes();
 		removeRolePointsInfoBoxes();
+		quickstartAssist.endWave();
 		clientThread.invokeLater(this::restoreHealerTeammatesHealth);
 		clientThread.invokeLater(this::restoreAttackStyleText);
 		if (wave != null)
@@ -950,9 +956,14 @@ public class BaMinigamePlugin extends Plugin
 			{
 				runnerTickTimer.incrementCount();
 			}
+			quickstartAssist.tick();
 		}
 		else if (loadingPlayerRoles)
 		{
+			final Widget leader = client.getWidget(BaWidgetInfo.BA_TEAM_PLAYER1_NAME.getGroupId(), BaWidgetInfo.BA_TEAM_PLAYER1_NAME.getChildId());
+			final Player player = client.getLocalPlayer();
+			this.isLeader = leader != null && player != null && leader.getText().equals(player.getName());
+
 			for (int i = 0; i < TEAM_PLAYERS_ROLES_WIDGETS.length; i++)
 			{
 				final Widget playerRole = client.getWidget(TEAM_PLAYERS_ROLES_WIDGETS[i].getGroupId(), TEAM_PLAYERS_ROLES_WIDGETS[i].getChildId());
@@ -1347,6 +1358,7 @@ public class BaMinigamePlugin extends Plugin
 		runnerTickTimer = new RunnerTickTimer();
 		runnerTickTimer.setDisplaying(displayTickTimer);
 		correctedCallCount = 0;
+		quickstartAssist.startWave();
 
 		if (role != null)
 		{
@@ -1638,6 +1650,7 @@ public class BaMinigamePlugin extends Plugin
 		groundLogsHammer.clear();
 		disableRunnerTickTimer(true);
 		removeDeathTimesInfoBoxes();
+		quickstartAssist.endWave();
 		lastListen = null;
 		lastListenItemId = 0;
 		clientThread.invokeLater(this::restoreAttackStyleText);
